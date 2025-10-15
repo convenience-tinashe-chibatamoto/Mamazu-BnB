@@ -1,4 +1,4 @@
-const Logo = ({ className = "", textColor = "text-gray-900", iconColor = "#bf7548" }) => {
+const Logo = ({ className = "", textColor = "text-gray-900", iconColor = "#0891b2" }) => {
   return (
     <div className={`flex items-center space-x-3 ${className}`}>
       {/* Custom SVG Logo */}

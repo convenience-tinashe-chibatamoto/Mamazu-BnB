@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { 
   Home, Bed, Bath, Wifi, Shield, Sun, Droplet, 
   Camera, Car, Phone, Mail, MapPin, ChevronLeft, 
-  ChevronRight, Check, Sparkles 
+  ChevronRight, Check, Sparkles, Send 
 } from 'lucide-react'
 import Logo from './components/Logo'
 
@@ -11,6 +11,15 @@ function App() {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false)
   const [galleryIndex, setGalleryIndex] = useState(0)
   const [navbarBg, setNavbarBg] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    preferredContact: 'email'
+  })
+  const [formStatus, setFormStatus] = useState({ type: '', message: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const images = [
     './images/Mamazu BnB (1).jpg',
@@ -77,6 +86,49 @@ function App() {
     setGalleryIndex((prev) => (prev - 1 + images.length) % images.length)
   }
 
+  const handleFormChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setFormStatus({ type: '', message: '' })
+
+    try {
+      const response = await fetch('/contact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(formData).toString()
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setFormStatus({ type: 'success', message: data.message })
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+          preferredContact: 'email'
+        })
+      } else {
+        setFormStatus({ type: 'error', message: data.message })
+      }
+    } catch (error) {
+      setFormStatus({ 
+        type: 'error', 
+        message: 'Failed to send message. Please try calling us directly.' 
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -85,7 +137,7 @@ function App() {
           <div className="flex justify-between items-center h-20">
             <Logo 
               textColor={navbarBg ? 'text-gray-900' : 'text-white text-shadow'}
-              iconColor={navbarBg ? '#bf7548' : '#ffffff'}
+              iconColor={navbarBg ? '#0891b2' : '#ffffff'}
             />
             <div className="hidden md:flex space-x-8">
               {['home', 'features', 'gallery', 'contact'].map((item) => (
@@ -136,7 +188,7 @@ function App() {
               Executive Luxury Living
             </h2>
             <p className="text-xl md:text-2xl text-white mb-4 text-shadow">
-              Fully Furnished Home in Greendale, Harare
+              Fully Furnished Rental Home in Greendale, Harare
             </p>
             <p className="text-lg md:text-xl text-white/90 mb-8 text-shadow max-w-2xl mx-auto">
               Experience unparalleled comfort and sophistication in this stunning 4-bedroom executive property
@@ -352,11 +404,11 @@ function App() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-stretch">
             <div>
-              <div className="bg-white rounded-3xl shadow-2xl p-12">
+              <div className="bg-white rounded-3xl shadow-2xl p-12 h-full min-h-[700px] flex flex-col">
                 <h3 className="text-2xl font-bold text-gray-900 mb-8">Contact Information</h3>
-                <div className="space-y-6">
+                <div className="space-y-6 flex-grow">
                   <a
                     href="tel:+263772363429"
                     className="flex items-center space-x-4 group"
@@ -418,16 +470,132 @@ function App() {
               </div>
             </div>
 
-            <div className="relative h-96 md:h-full min-h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative min-h-[700px] rounded-3xl overflow-hidden shadow-2xl">
               <img
                 src={images[0]}
                 alt="Mamazu BnB"
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                <div className="p-8 text-white">
-                  <h3 className="text-3xl font-display font-bold mb-2">Visit Us Today</h3>
-                  <p className="text-lg text-white/90">Contact us to schedule a viewing</p>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+              
+              {/* Contact Form Overlay */}
+              <div className="relative h-full flex flex-col justify-center p-6 md:p-8">
+                {/* Contact Form */}
+                <div className="p-6 md:p-8">
+                  <h4 className="text-2xl font-display font-bold text-cyan-400 mb-2 text-center drop-shadow-lg">Send Us a Message</h4>
+                  <p className="text-cyan-300 text-center mb-6 text-sm drop-shadow">Fill out the form and we'll get back to you soon</p>
+                  
+                  {formStatus.message && (
+                    <div className={`p-3 rounded-lg mb-4 text-sm ${
+                      formStatus.type === 'success' 
+                        ? 'bg-green-50 text-green-800 border border-green-200' 
+                        : 'bg-red-50 text-red-800 border border-red-200'
+                    }`}>
+                      {formStatus.message}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label htmlFor="name" className="block text-xs font-semibold text-white drop-shadow mb-1">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleFormChange}
+                          required
+                          className="w-full px-3 py-2 text-sm bg-white/80 border border-white/40 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-xs font-semibold text-white drop-shadow mb-1">
+                          Email *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleFormChange}
+                          required
+                          className="w-full px-3 py-2 text-sm bg-white/80 border border-white/40 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all"
+                          placeholder="john@example.com"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label htmlFor="phone" className="block text-xs font-semibold text-white drop-shadow mb-1">
+                          Phone
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleFormChange}
+                          className="w-full px-3 py-2 text-sm bg-white/80 border border-white/40 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all"
+                          placeholder="+263 772 363 429"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="preferredContact" className="block text-xs font-semibold text-white drop-shadow mb-1">
+                          Contact Method
+                        </label>
+                        <select
+                          id="preferredContact"
+                          name="preferredContact"
+                          value={formData.preferredContact}
+                          onChange={handleFormChange}
+                          className="w-full px-3 py-2 text-sm bg-white/80 border border-white/40 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all"
+                        >
+                          <option value="email">Email</option>
+                          <option value="phone">Phone</option>
+                          <option value="whatsapp">WhatsApp</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-xs font-semibold text-white drop-shadow mb-1">
+                        Message *
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleFormChange}
+                        required
+                        rows="3"
+                        className="w-full px-3 py-2 text-sm bg-white/80 border border-white/40 rounded-lg focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all resize-none"
+                        placeholder="Tell us about your requirements..."
+                      ></textarea>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-all transform hover:scale-[1.02] shadow-lg flex items-center justify-center space-x-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Sending...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Send Message</span>
+                        </>
+                      )}
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -441,7 +609,7 @@ function App() {
           <Logo 
             className="justify-center mb-4"
             textColor="text-white"
-            iconColor="#ca8f64"
+            iconColor="#22d3ee"
           />
           <p className="text-gray-400 mb-6">
             Executive Luxury Accommodation in Greendale, Harare
