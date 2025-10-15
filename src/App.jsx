@@ -25,16 +25,16 @@ function App() {
   const observerRef = useRef(null)
 
   const images = [
-    './images/Mamazu BnB (1).jpg',
-    './images/Mamazu BnB (2).jpg',
-    './images/Mamazu BnB (3).jpg',
-    './images/Mamazu BnB (4).jpg',
-    './images/Mamazu BnB (5).jpg',
-    './images/Mamazu BnB (6).jpg',
-    './images/Mamazu BnB (7).jpg',
-    './images/Mamazu BnB (8).jpg',
-    './images/Mamazu BnB (9).jpg',
-    './images/Mamazu BnB (10).jpg',
+    '/images/Mamazu BnB (1).jpg',
+    '/images/Mamazu BnB (2).jpg',
+    '/images/Mamazu BnB (3).jpg',
+    '/images/Mamazu BnB (4).jpg',
+    '/images/Mamazu BnB (5).jpg',
+    '/images/Mamazu BnB (6).jpg',
+    '/images/Mamazu BnB (7).jpg',
+    '/images/Mamazu BnB (8).jpg',
+    '/images/Mamazu BnB (9).jpg',
+    '/images/Mamazu BnB (10).jpg',
   ]
 
   useEffect(() => {
