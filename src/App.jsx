@@ -223,12 +223,11 @@ function App() {
                 </button>
               ))}
             </div>
-            <a
-              href="tel:+263772363429"
+            <button
               className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-medium transition-all transform hover:scale-105 shadow-lg"
             >
               Book Now
-            </a>
+            </button>
           </div>
         </div>
       </nav>
