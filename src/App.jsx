@@ -677,21 +677,10 @@ function App() {
       <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <Logo 
-            className="justify-center mb-4"
+            className="justify-center mb-6"
             textColor="text-white"
             iconColor="#22d3ee"
           />
-          <p className="text-gray-400 mb-6">
-            Executive Luxury Accommodation in Greendale, Harare
-          </p>
-          <div className="flex justify-center space-x-8 mb-6">
-            <a href="tel:+263772363429" className="text-gray-400 hover:text-primary-400 transition-colors">
-              +263 772 363 429
-            </a>
-            <a href="mailto:mamazu@gmail.com" className="text-gray-400 hover:text-primary-400 transition-colors">
-              mamazu@gmail.com
-            </a>
-          </div>
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} Mamazu BnB. All rights reserved.
           </p>
