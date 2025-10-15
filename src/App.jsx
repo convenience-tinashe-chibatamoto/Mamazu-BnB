@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { 
   Home, Bed, Bath, Wifi, Shield, Sun, Droplet, 
   Camera, Car, Phone, Mail, MapPin, ChevronLeft, 
@@ -11,6 +11,8 @@ function App() {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false)
   const [galleryIndex, setGalleryIndex] = useState(0)
   const [navbarBg, setNavbarBg] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [loadingProgress, setLoadingProgress] = useState(0)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,6 +22,7 @@ function App() {
   })
   const [formStatus, setFormStatus] = useState({ type: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const observerRef = useRef(null)
 
   const images = [
     './images/Mamazu BnB (1).jpg',
@@ -41,6 +44,23 @@ function App() {
     return () => clearInterval(timer)
   }, [images.length])
 
+  // Loading screen effect
+  useEffect(() => {
+    // Simulate loading progress
+    const interval = setInterval(() => {
+      setLoadingProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval)
+          setTimeout(() => setIsLoading(false), 500)
+          return 100
+        }
+        return prev + 10
+      })
+    }, 150)
+
+    return () => clearInterval(interval)
+  }, [])
+
   useEffect(() => {
     const handleScroll = () => {
       setNavbarBg(window.scrollY > 50)
@@ -48,6 +68,25 @@ function App() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Scroll animation observer
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated')
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+    )
+
+    const elements = document.querySelectorAll('.animate-on-scroll')
+    elements.forEach(el => observerRef.current?.observe(el))
+
+    return () => observerRef.current?.disconnect()
+  }, [isLoading])
 
   const features = [
     { icon: Bed, text: '4 Spacious Bedrooms', desc: 'With fitted cupboards & en-suite' },
@@ -130,7 +169,39 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      {/* Loading Screen */}
+      {isLoading && (
+        <div className="fixed inset-0 z-[100] bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 flex flex-col items-center justify-center">
+          <div className="text-center">
+            {/* Animated Logo */}
+            <div className="mb-8 animate-float">
+              <div className="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center shadow-2xl">
+                <Home className="w-12 h-12 text-primary-600" />
+              </div>
+            </div>
+            
+            {/* Brand Name */}
+            <h1 className="text-5xl font-display font-bold text-white mb-2 animate-fade-in-up">
+              Mamazu BnB
+            </h1>
+            <p className="text-xl text-primary-100 mb-12 animate-fade-in-up delay-200">
+              Executive Luxury Living
+            </p>
+            
+            {/* Loading Bar */}
+            <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-white rounded-full transition-all duration-300 ease-out"
+                style={{ width: `${loadingProgress}%` }}
+              ></div>
+            </div>
+            <p className="text-white/80 mt-4 text-sm">{loadingProgress}%</p>
+          </div>
+        </div>
+      )}
+
+      <div className="min-h-screen bg-white">
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${navbarBg ? 'glass-effect shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -184,25 +255,25 @@ function App() {
         
         <div className="relative h-full flex items-center justify-center text-center px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-6 text-shadow animate-fade-in">
+            <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-6 text-shadow animate-fade-in-up opacity-0 [animation-delay:0.3s]">
               Executive Luxury Living
             </h2>
-            <p className="text-xl md:text-2xl text-white mb-4 text-shadow">
+            <p className="text-xl md:text-2xl text-white mb-4 text-shadow animate-fade-in-up opacity-0 [animation-delay:0.5s]">
               Fully Furnished Rental Home in Greendale, Harare
             </p>
-            <p className="text-lg md:text-xl text-white/90 mb-8 text-shadow max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white/90 mb-8 text-shadow max-w-2xl mx-auto animate-fade-in-up opacity-0 [animation-delay:0.7s]">
               Experience unparalleled comfort and sophistication in this stunning 4-bedroom executive property
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up opacity-0 [animation-delay:0.9s]">
               <button
                 onClick={() => scrollToSection('contact')}
-                className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-2xl"
+                className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-2xl animate-pulse-glow"
               >
                 Contact Us
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all border-2 border-white/50"
+                className="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all border-2 border-white/50 hover:border-white"
               >
                 Explore Features
               </button>
@@ -221,7 +292,7 @@ function App() {
       {/* Features Grid */}
       <section id="features" className="py-20 px-4 bg-gradient-to-b from-white to-primary-50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-on-scroll animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
               Exceptional Features
             </h2>
@@ -234,10 +305,10 @@ function App() {
             {features.map((feature, idx) => (
               <div
                 key={idx}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-primary-100"
+                className={`bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-primary-100 animate-on-scroll animate-scale-in delay-${(idx % 4 + 1) * 100} group cursor-pointer`}
               >
-                <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                  <feature.icon className="w-8 h-8 text-primary-600" />
+                <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary-600 transition-all duration-300 group-hover:scale-110">
+                  <feature.icon className="w-8 h-8 text-primary-600 group-hover:text-white transition-colors" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.text}</h3>
                 <p className="text-gray-600">{feature.desc}</p>
@@ -246,7 +317,7 @@ function App() {
           </div>
 
           {/* Property Details */}
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden animate-on-scroll animate-fade-in-up">
             <div className="grid md:grid-cols-2 gap-0">
               <div className="p-12 bg-primary-600 text-white">
                 <h3 className="text-3xl font-display font-bold mb-6">Property Details</h3>
@@ -294,7 +365,7 @@ function App() {
           </div>
 
           {/* Ideal For Section */}
-          <div className="mt-16 bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-12 text-white shadow-2xl">
+          <div className="mt-16 bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-12 text-white shadow-2xl animate-on-scroll animate-fade-in-up">
             <h3 className="text-3xl font-display font-bold mb-8 text-center">Ideal For</h3>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
@@ -327,7 +398,7 @@ function App() {
       {/* Gallery */}
       <section id="gallery" className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-on-scroll animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
               Photo Gallery
             </h2>
@@ -344,7 +415,7 @@ function App() {
                   setGalleryIndex(idx)
                   setIsGalleryOpen(true)
                 }}
-                className="relative overflow-hidden rounded-xl aspect-square cursor-pointer group"
+                className={`relative overflow-hidden rounded-xl aspect-square cursor-pointer group animate-on-scroll animate-scale-in delay-${((idx % 5) + 1) * 100}`}
               >
                 <img
                   src={img}
@@ -395,7 +466,7 @@ function App() {
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 bg-gradient-to-b from-primary-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-on-scroll animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
               Get in Touch
             </h2>
@@ -405,8 +476,8 @@ function App() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-stretch">
-            <div>
-              <div className="bg-white rounded-3xl shadow-2xl p-12 h-full min-h-[700px] flex flex-col">
+            <div className="animate-on-scroll animate-slide-in-left">
+              <div className="bg-white rounded-3xl shadow-2xl p-12 h-full min-h-[700px] flex flex-col hover:shadow-3xl transition-shadow duration-300">
                 <h3 className="text-2xl font-bold text-gray-900 mb-8">Contact Information</h3>
                 <div className="space-y-6 flex-grow">
                   <a
@@ -470,7 +541,7 @@ function App() {
               </div>
             </div>
 
-            <div className="relative min-h-[700px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative min-h-[700px] rounded-3xl overflow-hidden shadow-2xl animate-on-scroll animate-slide-in-right">
               <img
                 src={images[0]}
                 alt="Mamazu BnB"
@@ -627,7 +698,8 @@ function App() {
           </p>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }
 
