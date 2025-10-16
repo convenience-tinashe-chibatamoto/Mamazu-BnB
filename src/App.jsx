@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { 
   Home, Bed, Bath, Wifi, Shield, Sun, Droplet, 
-  Camera, Car, Phone, Mail, Globe, ChevronLeft, 
+  Camera, Car, Phone, Mail, Globe, MapPin, ChevronLeft, 
   ChevronRight, Check, GraduationCap, Send 
 } from 'lucide-react'
 import Logo from './components/Logo'
