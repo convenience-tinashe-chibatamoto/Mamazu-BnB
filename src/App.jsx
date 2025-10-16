@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { 
   Home, Bed, Bath, Wifi, Shield, Sun, Droplet, 
   Camera, Car, Phone, Mail, MapPin, ChevronLeft, 
-  ChevronRight, Check, Sparkles, Send 
+  ChevronRight, Check, FlaskConical, Send 
 } from 'lucide-react'
 import Logo from './components/Logo'
 
@@ -373,7 +373,7 @@ function App() {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="bg-white/20 backdrop-blur-sm w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Sparkles className="w-10 h-10" />
+                  <FlaskConical className="w-10 h-10" />
                 </div>
                 <h4 className="text-xl font-semibold mb-2">Researchers</h4>
                 <p className="text-primary-100">Perfect quiet environment for focused work</p>
