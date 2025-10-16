@@ -22,6 +22,8 @@ function App() {
   })
   const [formStatus, setFormStatus] = useState({ type: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
   const observerRef = useRef(null)
 
   const images = [
@@ -123,6 +125,31 @@ function App() {
 
   const prevGalleryImage = () => {
     setGalleryIndex((prev) => (prev - 1 + images.length) % images.length)
+  }
+
+  // Touch handlers for swipe navigation
+  const handleTouchStart = (e) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+    
+    if (isLeftSwipe) {
+      nextGalleryImage()
+    }
+    if (isRightSwipe) {
+      prevGalleryImage()
+    }
   }
 
   const handleFormChange = (e) => {
@@ -436,7 +463,12 @@ function App() {
 
       {/* Gallery Modal */}
       {isGalleryOpen && (
-        <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
+        <div 
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <button
             onClick={() => setIsGalleryOpen(false)}
             className="absolute top-4 right-4 text-white text-4xl hover:text-primary-400 transition-colors"
