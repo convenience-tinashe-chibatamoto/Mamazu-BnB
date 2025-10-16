@@ -136,18 +136,19 @@ function App() {
     setFormStatus({ type: '', message: '' })
 
     try {
-      const response = await fetch('/contact.php', {
+      const response = await fetch('https://formspree.io/f/mdkwyyvy', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: new URLSearchParams(formData).toString()
+        body: JSON.stringify(formData)
       })
 
-      const data = await response.json()
-
-      if (data.success) {
-        setFormStatus({ type: 'success', message: data.message })
+      if (response.ok) {
+        setFormStatus({ 
+          type: 'success', 
+          message: 'Thank you for your message! We will get back to you soon.' 
+        })
         setFormData({
           name: '',
           email: '',
@@ -156,7 +157,10 @@ function App() {
           preferredContact: 'email'
         })
       } else {
-        setFormStatus({ type: 'error', message: data.message })
+        setFormStatus({ 
+          type: 'error', 
+          message: 'Something went wrong. Please try again or call us directly.' 
+        })
       }
     } catch (error) {
       setFormStatus({ 
