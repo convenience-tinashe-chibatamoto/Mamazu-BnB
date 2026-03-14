@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://lightgrey-mantis-680447.hostingersite.com/</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2026-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(1).jpg</image:loc>
       <image:title>Mamazu BnB Luxury Executive Home - Exterior View</image:title>
+      <image:caption>Executive luxury accommodation in Greendale, Harare</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(2).jpg</image:loc>
       <image:title>Mamazu BnB - Interior Living Space</image:title>
+      <image:caption>Modern furnished living area with premium amenities</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(3).jpg</image:loc>
       <image:title>Mamazu BnB - Bedroom</image:title>
+      <image:caption>Spacious bedroom with en-suite bathroom</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(4).jpg</image:loc>
+      <image:title>Mamazu BnB - Kitchen</image:title>
+      <image:caption>Modern kitchen with granite countertops</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(5).jpg</image:loc>
+      <image:title>Mamazu BnB - Bathroom</image:title>
+      <image:caption>Luxury bathroom with modern fixtures</image:caption>
     </image:image>
   </url>
 </urlset>
