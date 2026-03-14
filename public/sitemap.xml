@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://lightgrey-mantis-680447.hostingersite.com/</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(1).jpg</image:loc>
+      <image:title>Mamazu BnB Luxury Executive Home - Exterior View</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(2).jpg</image:loc>
+      <image:title>Mamazu BnB - Interior Living Space</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lightgrey-mantis-680447.hostingersite.com/images/Mamazu%20BnB%20(3).jpg</image:loc>
+      <image:title>Mamazu BnB - Bedroom</image:title>
+    </image:image>
+  </url>
+</urlset>
