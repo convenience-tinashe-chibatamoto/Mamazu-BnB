@@ -2,6 +2,7 @@
   "name": "mamazu-bnb",
   "private": true,
   "version": "1.0.0",
+  "description": "Executive Luxury Fully Furnished Home for Short-term rental in Greendale, Harare - Modern React website for Mamazu BnB",
   "type": "module",
   "scripts": {
     "dev": "vite",
