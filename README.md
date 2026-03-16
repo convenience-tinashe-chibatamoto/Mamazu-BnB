@@ -28,17 +28,23 @@ A stunning, modern website for Mamazu BnB - Executive Luxury Accommodation in Gr
 
 ### Installation
 
-1. Install dependencies:
+1. Clone the repository:
+```bash
+git clone https://github.com/convenience-tinashe-chibatamoto/Mamazu-BnB.git
+cd Mamazu-BnB
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Start the development server:
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-3. Open your browser and visit: `http://localhost:5173`
+4. Open your browser and visit: `http://localhost:5173`
 
 ### Build for Production
 
