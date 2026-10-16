@@ -6,6 +6,7 @@
   "type": "module",
   "author": "Mamazu BnB",
   "homepage": "https://lightgrey-mantis-680447.hostingersite.com/",
+  "keywords": ["bnb", "accommodation", "harare", "zimbabwe", "luxury", "react", "vite", "tailwindcss"],
   "repository": {
     "type": "git",
     "url": "https://github.com/convenience-tinashe-chibatamoto/Mamazu-BnB.git"
