@@ -6,6 +6,10 @@ import {
 } from 'lucide-react'
 import Logo from './components/Logo'
 
+/**
+ * Main App component for Mamazu BnB website
+ * Displays luxury accommodation information with image gallery and contact form
+ */
 function App() {
   const [currentImage, setCurrentImage] = useState(0)
   const [isGalleryOpen, setIsGalleryOpen] = useState(false)
