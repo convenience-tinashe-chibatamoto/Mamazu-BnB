@@ -1,6 +1,13 @@
 # Mamazu BnB Website
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-18.2.0-61dafb.svg?logo=react)
+![Vite](https://img.shields.io/badge/Vite-4.4.5-646cff.svg?logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.3-38bdf8.svg?logo=tailwindcss)
+
 A stunning, modern website for Mamazu BnB - Executive Luxury Accommodation in Greendale, Harare.
+
+🌐 **[Live Demo](https://lightgrey-mantis-680447.hostingersite.com/)**
 
 ## Features
 
