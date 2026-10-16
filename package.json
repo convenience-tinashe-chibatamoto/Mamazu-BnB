@@ -6,6 +6,10 @@
   "type": "module",
   "author": "Mamazu BnB",
   "homepage": "https://lightgrey-mantis-680447.hostingersite.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/convenience-tinashe-chibatamoto/Mamazu-BnB.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
